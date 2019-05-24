@@ -1,13 +1,16 @@
 import { Injectable } from '@angular/core';
+import {Subject} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PersonsService {
-  persons = ['Trump', 'Tucker', 'Stuckey'];
+  personsChanged = new Subject<string[]>();
+ persons = ['Trump', 'Tucker', 'Stuckey'];
 
   addPerson(name: string) {
     this.persons.push(name);
+    this.personsChanged.next(this.persons);
   }
 
   constructor() { }
@@ -18,6 +21,7 @@ export class PersonsService {
       }
 
     );
+    this.personsChanged.next(this.persons);
     console.log(this.persons);
   }
 }

@@ -1,4 +1,5 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {PersonsService} from '../persons.service';
 
 @Component({
   selector: 'app-person-input',
@@ -7,16 +8,16 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 })
 export class PersonInputComponent implements OnInit {
 
-  constructor() { }
-  @Output() personCreate = new EventEmitter<string>();
+  constructor(private personsService: PersonsService) { }
+
     enteredPersonName = '';
   ngOnInit() {
   }
 
   onCreatePerson() {
+
+    this.personsService.addPerson(this.enteredPersonName)
     console.log(this.enteredPersonName);
-    this.personCreate.emit(this.enteredPersonName)
-    this.enteredPersonName = '';
 
   }
 
